@@ -1,121 +1,44 @@
 import React from 'react';
-const axios = require('axios');
+import { Redirect } from 'react-router-dom';
+import logo from '../assets/icon.png';
 
 // familiarize with how add card works without redirect to diff endpoint
 // app, router, axios
 
 class Signup extends React.Component {
   render() {
+    const { registerUser, loggedIn, update } = this.props;
+
+    if (loggedIn) return <Redirect to="/" />;
+
     return (
-      <div
-        style={{
-          height: '100vh',
-          width: '100vw',
-          textAlign: 'center',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <form
-          id="signup-form"
-          style={{
-            border: '1px solid black',
-            display: 'inline-block',
-            textAlign: 'center',
-            maxWidth: '500px',
-            minHeight: '400px',
-            // padding: '25px',
-            paddingBottom: '5px',
-            borderRadius: '4px',
-            borderWidth: '1px',
-            border: 'solid',
-            borderColor: '#D9DCE0',
-          }}
-        >
-          <img
-            // logo url
-            src=""
-            alt="SCRUMadillo"
-            style={{ width: '300px', marginBottom: '15px' }}
-          ></img>
+      <div className="form-container" >
+        <form className="signup-form" id="signup-form" onSubmit={registerUser}>
+          <img src={logo} alt="SCRUMadillo" className="icon" />
           <br></br>
-          <input
-            id="input-username"
-            name="username"
-            type="text"
-            placeholder="Username"
-            style={{
-              marginBottom: '10px',
-              width: '366px',
-              height: '54px',
-              borderRadius: '4px',
-              border: 'solid 1px',
-              borderColor: '#D9DCE0',
-              paddingLeft: '15px',
-            }}
-          ></input>
+          <input className="form-input" id="input-username" name="username" type="text" placeholder="Username" onChange={update('username')} />
           <br></br>
-          <input
-            id="input-password"
-            name="password"
-            type="password"
-            placeholder="Password"
-            style={{
-              marginBottom: '10px',
-              width: '366px',
-              height: '54px',
-              borderRadius: '4px',
-              border: 'solid 1px',
-              borderColor: '#D9DCE0',
-              paddingLeft: '15px',
-            }}
-          ></input>
-          <input
-            id="input-confirm-password"
-            name="confirm-password"
-            type="password"
-            placeholder="Confirm Password"
-            style={{
-              marginBottom: '10px',
-              width: '366px',
-              height: '54px',
-              borderRadius: '4px',
-              border: 'solid 1px',
-              borderColor: '#D9DCE0',
-              paddingLeft: '15px',
-            }}
-          ></input>
+          <input className="form-input" id="input-password" name="password" type="password" placeholder="Password" onChange={update('password')} />
+          <input className="form-input" id="input-confirm-password" name="confirm-password" type="password" placeholder="Confirm Password" onChange={update('confirm')} />
           <br></br>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              this.props.signup(
-                document.getElementById('input-username').value,
-                document.getElementById('input-password').value,
-                document.getElementById('input-confirm-password').value
-              );
-            }}
-            style={{
-              width: '120px',
-              height: '40px',
-              marginTop: '10px',
-              marginBottom: '25px',
-              border: 'solid 1px #f9f9f9',
-              backgroundColor: '#9cdaf0',
-              fontFamily: 'sans-serif',
-              fontWeight: 'bold',
-              borderRadius: '4px',
-            }}
+          <button className="form-submit-button" 
+          // onClick={(e) => {
+          //     e.preventDefault();
+          //     registerUser(
+          //       document.getElementById('input-username').value,
+          //       document.getElementById('input-password').value,
+          //       document.getElementById('input-confirm-password').value
+          //     );
+          //   }}
           >
             Sign Up
           </button>
           <div>
             <a href="https://github.com/login/oauth/authorize?client_id=fade47f049a7b9f4a3dc">
               <img
+                className="github-button"
                 id="github-logo"
-                src="https://www.backblaze.com/blog/wp-content/uploads/2018/05/github-logo.png"
-                style={{ width: '250px' }}
+                src="https://www.backblaze.com/blog/wp-content/uploads/2018/05/github-logo.png"   
               />
             </a>
             {/* Didn't get to Google OAuth

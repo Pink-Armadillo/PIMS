@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
-//Message Alex for the MongoDB Atlas URI if you don't have it!
+//Create a .env file and set a variable called MONGO_URI to your mongo URI
 const mongoURI = process.env.MONGO_URI;
 mongoose
   .connect(mongoURI, {

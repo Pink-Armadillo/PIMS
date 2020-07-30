@@ -1,5 +1,5 @@
 /* eslint-disable */
-
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -13,8 +13,6 @@ module.exports = {
   },
   mode: process.env.NODE_ENV,
   devServer: {
-    host: 'localhost',
-    port: 8080,
     // match the output path
     contentBase: path.resolve(__dirname, 'client'),
     // enable HMR on the devServer
@@ -24,9 +22,7 @@ module.exports = {
     publicPath: '/dist/',
     // fallback to root for other urls
     historyApiFallback: true,
-
     inline: true,
-
     headers: { 'Access-Control-Allow-Origin': '*' },
     proxy: {
       '/server': {
@@ -35,7 +31,6 @@ module.exports = {
       },
     },
   },
-
   module: {
     rules: [
       {
@@ -57,12 +52,12 @@ module.exports = {
       {
         test: /.(css|scss)$/,
         exclude: /node_modules/,
-        use: ['style-loader', 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader', "sass-loader"],
       },
     ],
   },
-
   plugins: [
+    new MiniCssExtractPlugin(),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: './client/index.html',

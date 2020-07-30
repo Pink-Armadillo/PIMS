@@ -16,59 +16,68 @@ class App extends Component {
     super(props);
     this.state = {
       username: null,
+      password: null,
+      confirm: null,
       userId: null,
-      // hacky state values to conditionally render different components on '/' route
       loggedIn: false,
-      // showSignUp: false,
     };
-    this.loginFunction = this.loginFunction.bind(this);
-    this.logOut = this.logOut.bind(this);
-    this.signupFunction = this.signupFunction.bind(this);
-    // this.showSignUpFunction = this.showSignUpFunction.bind(this);
+    this.update = this.update.bind(this)
+    this.toggleLogin = this.toggleLogin.bind(this);
+    this.toggleLogout = this.toggleLogout.bind(this);
+    this.registerUser = this.registerUser.bind(this);
     // this.github = this.github.bind(this);
   }
 
-  logOut() {
+  update(field) {
+    return e => {
+    console.log(e.target.name, " ", e.target.value)
+      
+      this.setState({
+      [field]: e.target.value
+    });}
+  }
+
+  toggleLogout() {
     this.setState({ loggedIn: false });
   }
 
-  loginFunction(username, password) {
+  toggleLogin(e) {
+    e.preventDefault();
     axios
-      .post('/server/login', { username, password })
+      .post('/server/login', { 
+        username: this.state.username, 
+        password: this.state.password 
+      })
       // assign user to state
-      .then((user) => {
-        console.log('logged in -> ', user.data);
+      .then(({ data }) => {
+        console.log('logged in -> ', data);
         this.setState({
           loggedIn: true,
-          username: user.data.username,
-          userId: user.data._id,
+          username: data.username,
+          userId: data._id,
         });
       })
       .catch((error) => console.log(error));
   }
 
-  signupFunction(username, password, confirm) {
-    if (password === confirm) {
+  registerUser(e) {
+    e.preventDefault();
+    if (this.state.password === this.state.confirm) {
       console.log('signup function');
       axios
-        .post('/server/signup', { username: username, password: password })
-        .then((user) => {
-          if (user) {
+        .post('/server/signup', { username: this.state.username, password: this.state.password })
+        .then(({ data }) => {
+          if (data.username) {
             alert('account created successfully');
-            window.location.href = 'http://localhost:8080/';
-
+            // window.location.href = 'http://localhost:8080/';
             this.setState({
               loggedIn: true,
-              username: user.username,
-              userId: user._id,
+              username: data.username,
+              userId: data._id,
             });
-          } else {
-            console.log('unsuccess');
-          }
+          } else console.log('unsuccess');
         });
-    } else {
-      console.log('passwords not matched');
-    }
+    } else console.log('passwords not matched');
   }
 
   /* Didn't complete the Github authentication process.
@@ -92,10 +101,6 @@ class App extends Component {
   //   }
   // }
 
-  // showSignUpFunction() {
-  //   this.setState({ showSignUp: true });
-  // }
-
   // componentDidMount() {
   //   fetch('/server/cards')
   //     .then((data) => data.json())
@@ -103,29 +108,43 @@ class App extends Component {
   // }
 
   render() {
-    let main;
-    // Shows <Canvas /> when logged in
-    if (this.state.loggedIn === true) {
-      main = <Canvas logout={this.logOut} />;
-      // Shows <Login /> when not logged in
-    } else if (this.state.loggedIn === false) {
-      main = (
-        <Login
-          login={this.loginFunction}
-          showsignup={this.showSignUpFunction}
-        />
-      );
-    }
-
+    console.log(this.state)
     return (
       <div className="App">
         <Router>
           <Switch>
             <Route
               path="/signup"
-              render={() => <Signup signup={this.signupFunction} />}
+              render={() => (
+                <Signup
+                  update={this.update}
+                  registerUser={this.registerUser}
+                  loggedIn={this.state.loggedIn}
+                />
+              )}
             />
-            <Route exact path="/" render={() => main} />
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <Canvas
+                  logout={this.toggleLogout}
+                  loggedIn={this.state.loggedIn}
+                  username={this.state.username}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/login"
+              render={() => (
+                <Login
+                  update={this.update}
+                  toggleLogin={this.toggleLogin}
+                  loggedIn={this.state.loggedIn}
+                />
+              )}
+            />
           </Switch>
         </Router>
       </div>

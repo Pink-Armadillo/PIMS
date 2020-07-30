@@ -7,33 +7,28 @@ import { makeStyles } from '@material-ui/core/styles';
 import { IconButton } from '@material-ui/core';
 
 import { useDispatch } from 'react-redux';
-import { getCards }from '../reducers/deckSlice';
-import { getAll } from '../reducers/cardSlice';
+import { getCards } from '../reducers/deckSlice';
+import { getAll } from '../reducers/boardslice';
 
 const useStyles = makeStyles(() => ({
-  root: {
-    flexGrow: 1,
-  },
   button: {
     marginLeft: 'auto',
   },
   button2: {
     marginRight: 'auto',
   },
-  title: {
-    flexGrow: 1,
-  },
 }));
 
 const NavBar = (props) => {
+  const { logout } = props;
   const classes = useStyles();
   const dispatch = useDispatch();
   return (
-    <div>
-      <AppBar position="static" color="transparent">
+    <div >
+      <AppBar position="static" color="#e8eaf6">
         <Toolbar>
           <IconButton edge="start">
-            <img src={logo} style={{ width: 165, height: 80 }}></img>
+            <img src={logo} onClick={logout} className="logo" /> 
           </IconButton>
           <Button
             className={classes.button2}
@@ -42,7 +37,7 @@ const NavBar = (props) => {
               fetch('/server/cards')
                 .then((resp) => resp.json())
                 .then((data) => {
-                  dispatch(getCards(data));
+                  // dispatch(getCards(data));
                   dispatch(getAll(data));
                 });
               document.querySelector('#getCards').style.display = 'none';
@@ -51,7 +46,7 @@ const NavBar = (props) => {
             Add Cards
           </Button>
 
-          <Button className={classes.button} onClick={props.logout}>
+          <Button className={classes.button} onClick={logout}>
             Logout
           </Button>
         </Toolbar>

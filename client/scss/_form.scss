@@ -1,0 +1,64 @@
+.form-container {
+	height: 100vh;
+	width: 100vw;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	// to refactor css to use EM / REM
+	.login-form {
+		border: 1px solid black;
+		display: inline-block;
+		text-align: center;
+		max-width: 650px;
+		min-height: 400px;
+		padding: 25px;
+		padding-bottom: 5px;
+		border-radius: 4px;
+		border: 1px solid #D9DCE0;
+		background-color: #f9f9f9;
+	}
+	.signup-form {
+		border: 1px solid black;
+		display: inline-block;
+		text-align: center;
+		max-width: 500px;
+		min-height: 400px;
+		padding-bottom: 5px;
+		border-radius: 4px;
+		border: 1px solid #D9DCE0;
+		background-color: #f9f9f9;
+	}
+
+	.form-input {
+		margin-bottom: 10px;
+		width: 366px;
+		height: 54px;
+		border-radius: 4px;
+		border: 1px solid #D9DCE0;
+		padding-left: 15px
+	}
+
+	.icon { 
+		width: 300px;
+		margin-bottom: 15px 
+	}
+
+	.form-submit-button {
+		width: 120px;
+		height: 40px;
+		margin-top: 10px;
+		margin-bottom: 25px;
+		border: 1px solid #f9f9f9;
+		background-color: #9cdaf0;
+		font-family: sans-serif;
+		font-weight: bold;
+		border-radius: 4px
+	}
+
+	.github-button { width: 250px }
+}
+
+
+

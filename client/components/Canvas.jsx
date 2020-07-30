@@ -7,16 +7,16 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { useDispatch } from 'react-redux';
 import { getLogin } from '../reducers/loginSlice';
-import { assignUser, newState } from '../reducers/cardSlice';
+import { assignUser, newState } from '../reducers/boardSlice';
 import { useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
+
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'left',
     color: theme.palette.text.secondary,
+    backgroundColor: '#f9f9f9',
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -26,22 +26,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Canvas = (props) => {
-  const dispatch = useDispatch();
-  // console.log('props in Canvas -> ', props);
-  // dispatch(
-  //   getLogin({
-  //     username: props.username,
-  //     userId: props.userId,
-  //   })
-  // );
-  // dispatch(
-  //   assignUser({
-  //     username: props.username,
-  //   })
-  // );
+  const { logout, loggedIn, username } = props;
+
+  if (!loggedIn) return <Redirect to="/login" />;
 
   useEffect(() => {
-    fetch(`/server/boardState/${props.username}`)
+    fetch(`/server/boardState/${username}`)
       .then((response) => response.json())
       .then((data) =>
         dispatch(
@@ -57,10 +47,10 @@ const Canvas = (props) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+  <div>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <NavBar logout={props.logout} />
+          <NavBar logout={logout} />
         </Grid>
         <Grid item xs={6} sm={3}>
           <Paper className={classes.paper}>

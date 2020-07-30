@@ -4,21 +4,21 @@
   "description": "Life changing app development boilerplate",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production nodemon server/server.js",
+    "start": "cross-env NODE_ENV=production node server/server.js",
     "build": "cross-env NODE_ENV=production webpack",
     "dev": "cross-env NODE_ENV=development concurrently \" webpack-dev-server --open --hot \" \"nodemon ./server/server.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Pink-Armadillo/scrumadillo.git"
+    "url": "git+https://github.com/Cat-Snek/scrumadillo.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Pink-Armadillo/scrumadillo/issues"
+    "url": "https://github.com/Cat-Snek/scrumadillo/issues"
   },
-  "homepage": "https://github.com/Pink-Armadillo/scrumadillo#readme",
+  "homepage": "https://github.com/Cat-Snek/scrumadillo#readme",
   "devDependencies": {
     "@babel/core": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
@@ -30,8 +30,10 @@
     "css-loader": "^3.6.0",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
+    "mini-css-extract-plugin": "^0.9.0",
     "nodemon": "^2.0.4",
     "react-scripts": "^3.4.1",
+    "sass-loader": "^9.0.2",
     "style-loader": "^1.2.1",
     "webpack": "^4.44.0",
     "webpack-cli": "^3.3.12",
@@ -46,6 +48,7 @@
     "express": "^4.17.1",
     "fontsource-roboto": "^2.2.6",
     "mongoose": "^5.9.25",
+    "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hot-loader": "^4.12.21",
